@@ -7,4 +7,12 @@ let g:terminput_mappings = #{
       \ bash: '<C-O>'
       \}
 
-terminal ++curwin
+call term_start([
+      \ '/bin/bash',
+      \ '--noprofile',
+      \ '--norc'
+      \ ], #{
+      \   curwin: v:true,
+      \   term_name: 'demo'
+      \ }
+      \)
