@@ -3,7 +3,7 @@ vim9script
 import autoload 'terminput.vim'
 
 if !exists('g:terminput_after_send')
-  g:terminput_after_send = 'wipeout'
+  g:terminput_after_send = 'clear'
 endif
 
 command OpenTermInput {

@@ -25,7 +25,7 @@ g:terminput_mappings	Define pairs of a command name and a |keycode|.
 			is sent to the terminal.
 
 g:terminput_after_send	Set the action after sending contents to the
-			terminal.  Defaults to wipeout.
+			terminal.  Defaults to clear.
 
 
 
