@@ -5,6 +5,8 @@ Input buffer for a terminal window
 - Command line editing in a normal buffer.
 - Maps can be defined per command.
 
+![terminput demo](https://raw.githubusercontent.com/bnnkw/terminput/refs/heads/demo/demo.gif)
+
 ## Installation
 
 ```vim
