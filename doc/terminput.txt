@@ -1,0 +1,70 @@
+*terminput.txt*			Input buffer for a terminal window
+
+1. Commands		|terminput-commands|
+2. Options		|terminput-options|
+3. Actions		|terminput-actions|
+4. Variables		|terminput-variables|
+5. Mappings		|terminput-mappings|
+6. Examples		|terminput-examples|
+
+==============================================================================
+1. Commands					*terminput-commands*
+
+						*:OpenTermInput*
+:OpenTermInput		Open a window where writing contents will be sent
+			to the terminal.  Does nothing if the buffer
+			where the command was executed is not a |terminal|.
+
+
+==============================================================================
+2. Options					*terminput-options*
+
+g:terminput_mappings	Define pairs of a command name and a |keycode|.
+			When the command is running in the foreground,
+			|:OpenTermInput| is executed.  Otherwise, the key
+			is sent to the terminal.
+
+g:terminput_after_send	Set the action after sending contents to the
+			terminal.  Defaults to wipeout.
+
+
+
+==============================================================================
+3. Actions					*terminput-actions*
+
+after-send				*terminput-actions-after-send*
+
+wipeout			Execute |:wipeout|.
+clear			Execute |deletebufline()|.
+
+
+==============================================================================
+4. Variables					*terminput-variables*
+
+b:terminput_term_bufnr	Point to the terminal that the buffer sends
+			contents to.  Automatically set by executing
+			|:OpenTermInput|.
+
+==============================================================================
+5. Mappings					*terminput-mappings*
+
+						*terminput-CR*
+<CR>			Send the contents to the terminal identified by
+			|b:terminput_term_bufnr|.  The original contents
+			are saved into register t.
+
+==============================================================================
+6. Examples					*terminput-examples*
+
+>
+	let g:terminput_mappings = #{
+	      \ bash: '<C-O>',
+	      \ fish: '<C-O>',
+	      \ zsh: '<C-O>',
+	      \ aider: '<C-J>',
+	      \ claude: '<C-J>',
+	      \ gemini-cli: '<C-J>'
+	      \}
+<
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
