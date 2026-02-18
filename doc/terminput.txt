@@ -27,6 +27,8 @@ g:terminput_mappings	Define pairs of a command name and a |keycode|.
 g:terminput_after_send	Set the action after sending contents to the
 			terminal.  Defaults to clear.
 
+g:terminput_send_empty  Action to take when sending an empty buffer.
+			Valid values: crlf.  Defaults to crlf.
 
 
 ==============================================================================

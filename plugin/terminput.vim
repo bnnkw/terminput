@@ -6,6 +6,10 @@ if !exists('g:terminput_after_send')
   g:terminput_after_send = 'clear'
 endif
 
+if !exists('g:terminput_send_empty')
+  g:terminput_send_empty = 'crlf'
+endif
+
 command OpenTermInput {
   belowright new
   set filetype=terminput
