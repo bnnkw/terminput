@@ -10,10 +10,7 @@ if !exists('g:terminput_send_empty')
   g:terminput_send_empty = 'crlf'
 endif
 
-command OpenTermInput {
-  belowright new
-  set filetype=terminput
-}
+command! OpenTermInput terminput.OpenTermInputBuffer(bufnr())
 
 var key_bytes: dict<string> = {}
 

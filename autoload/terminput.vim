@@ -1,5 +1,14 @@
 vim9script
 
+export def OpenTermInputBuffer(bufnr: number): void
+  if getbufvar(bufnr, '&buftype') != 'terminal'
+    echoerr $'terminput: the buffer {bufnr} is not a terminal buffer.'
+    return
+  endif
+  belowright new
+  set filetype=terminput
+enddef
+
 def ProcStat(pid: number): dict<any>
   var p = $'/proc/{pid}/stat'
   if !filereadable(p)
