@@ -28,7 +28,13 @@ g:terminput_after_send	Set the action after sending contents to the
 			terminal.  Defaults to clear.  See |terminput-actions|.
 
 g:terminput_send_empty  Action to take when sending an empty buffer.
-			Valid values: crlf.  Defaults to crlf.
+			Valid values: none, space, tab, lf, crlf.
+			Defaults to crlf.
+			none:  Do nothing (after-send action is not executed).
+			space: Send a space (0x20).
+			tab:   Send a tab (0x09).
+			lf:    Send a line feed (0x0a).
+			crlf:  Send a carriage return (0x0d).
 
 
 ==============================================================================

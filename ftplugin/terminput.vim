@@ -1,6 +1,7 @@
 vim9script
 
 import autoload 'terminput.vim'
+import autoload 'opt.vim'
 
 b:terminput_term_bufnr = bufnr('#')
 
@@ -20,8 +21,18 @@ const after_send_actions: dict<func(): void> = {
 def SendToTerm(): void
   var lines = getbufline(bufnr(), 1, '$')
 
-  if lines == [''] && g:terminput_send_empty == 'crlf'
-    terminput.Send(b:terminput_term_bufnr, "\<CR>")
+  if lines == ['']
+    var se: opt.SendEmpty
+    try
+      se = opt.SendEmpty.FromString(g:terminput_send_empty)
+    catch
+      echoerr v:exception
+      return
+    endtry
+    if se == opt.SendEmpty.none
+      return
+    endif
+    terminput.Send(b:terminput_term_bufnr, se.keycode)
     if !has_key(after_send_actions, g:terminput_after_send)
       echoerr $'terminput: invalid g:terminput_after_send: "{g:terminput_after_send}". Valid: {keys(after_send_actions)->join(", ")}'
       return
