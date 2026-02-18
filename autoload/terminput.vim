@@ -1,11 +1,18 @@
 vim9script
 
-export def OpenTermInputBuffer(bufnr: number): void
-  if getbufvar(bufnr, '&buftype') != 'terminal'
-    echoerr $'terminput: the buffer {bufnr} is not a terminal buffer.'
+export def OpenTermInputBuffer(winid: number): void
+  if getwinvar(winid, '&buftype') != 'terminal'
+    echoerr $'terminput: the window {winid} is not a terminal window.'
     return
   endif
   belowright new
+  autocmd_add([{
+    group: 'terminput_open',
+    event: 'WinClosed',
+    pattern: $'{winid}',
+    cmd:  $'if bufexists({bufnr()}) | bwipeout {bufnr()} | endif',
+    once: true,
+  }])
   set filetype=terminput
 enddef
 

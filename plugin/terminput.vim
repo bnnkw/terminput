@@ -10,7 +10,7 @@ if !exists('g:terminput_send_empty')
   g:terminput_send_empty = 'crlf'
 endif
 
-command! OpenTermInput terminput.OpenTermInputBuffer(bufnr())
+command! OpenTermInput terminput.OpenTermInputBuffer(win_getid())
 
 var key_bytes: dict<string> = {}
 
