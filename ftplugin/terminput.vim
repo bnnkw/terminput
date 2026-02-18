@@ -7,6 +7,7 @@ b:terminput_term_bufnr = bufnr('#')
 
 setlocal buftype=nofile
 setlocal winfixheight
+setlocal nobuflisted
 resize 5
 
 const after_send_actions: dict<func(): void> = {
