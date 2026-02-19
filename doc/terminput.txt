@@ -19,22 +19,33 @@
 ==============================================================================
 2. Options					*terminput-options*
 
-g:terminput_mappings	Define pairs of a command name and a |keycode|.
-			When the command is running in the foreground,
-			|:OpenTermInput| is executed.  Otherwise, the key
-			is sent to the terminal.
+g:terminput_config	Define the per-command config. Each entry has a
+			command name as the key and its config.
+		Valid keys:
 
-g:terminput_after_send	Set the action after sending contents to the
-			terminal.  Defaults to clear.  See |terminput-actions|.
+		key		When the command is running in the
+				foreground, |:OpenTermInput| is executed.
 
-g:terminput_send_empty  Action to take when sending an empty buffer.
-			Valid values: none, space, tab, lf, crlf.
-			Defaults to crlf.
-			none:  Do nothing (after-send action is not executed).
-			space: Send a space (0x20).
-			tab:   Send a tab (0x09).
-			lf:    Send a line feed (0x0a).
-			crlf:  Send a carriage return (0x0d).
+				|terminput-actions|
+		after_send	Set the action after sending contents to
+				the terminal.  Defaults to clear.
+
+		send_empty  	Action to take when sending an empty
+				buffer.  Defaults to crlf.
+				Valid values:
+
+				none:  Do nothing.
+					(after_send is not executed)
+				space: Send a space (0x20).
+				tab:   Send a tab (0x09).
+				lf:    Send a line feed (0x0a).
+				crlf:  Send a carriage return (0x0d).
+
+g:terminput_after_send	The default value of after_send.
+			Use if config.command.after_send is not defined.
+
+g:terminput_send_empty  The default value of send_empty.
+			Use if config.command.send_empty is not defined.
 
 
 ==============================================================================
@@ -53,6 +64,9 @@ b:terminput_term_bufnr	Point to the terminal that the buffer sends
 			contents to.  Automatically set by executing
 			|:OpenTermInput|.
 
+b:terminput_config	The resolved config for this buffer.
+			Automatically set by |:OpenTermInput|.
+
 ==============================================================================
 5. Mappings					*terminput-mappings*
 
@@ -65,13 +79,14 @@ b:terminput_term_bufnr	Point to the terminal that the buffer sends
 6. Examples					*terminput-examples*
 
 >
-	let g:terminput_mappings = #{
-	      \ bash: '<C-O>',
-	      \ fish: '<C-O>',
-	      \ zsh: '<C-O>',
-	      \ aider: '<C-J>',
-	      \ claude: '<C-J>',
-	      \ gemini-cli: '<C-J>'
+	let g:terminput_config = #{
+	      \ bash: #{
+	      \   key: '<C-O>',
+	      \   after_send: 'wipeout'
+	      \ },
+	      \ sqlite3: #{
+	      \   key: '<C-O>'
+	      \ }
 	      \}
 <
 
