@@ -2,6 +2,7 @@ vim9script
 
 import autoload 'terminput.vim'
 import autoload 'opt.vim'
+import autoload 'config.vim'
 
 b:terminput_term_bufnr = bufnr('#')
 
@@ -19,20 +20,29 @@ const after_send_actions: dict<func(): void> = {
   },
 }
 
-def AfterSendAction()
-  if !has_key(after_send_actions, b:terminput_config.after_send)
-    echoerr $'terminput: invalid g:terminput_after_send: "{b:terminput_config.after_send}". Valid: {keys(after_send_actions)->join(", ")}'
+def CurrentConfig(): dict<any>
+  var fg = terminput.GetForeground(b:terminput_term_bufnr)
+  return config.GetEntry(fg)
+enddef
+
+def AfterSendAction(conf: dict<any>)
+  if !has_key(after_send_actions, conf.after_send)
+    echoerr $'terminput: invalid after_send: "{conf.after_send}". Valid: {keys(after_send_actions)->join(", ")}'
     return
   endif
-  after_send_actions[b:terminput_config.after_send]()
+  after_send_actions[conf.after_send]()
 enddef
 
 def SendToTerm(): void
+  var conf = CurrentConfig()
+  if empty(conf)
+    return
+  endif
   var lines = getbufline(bufnr(), 1, '$')
   if lines == ['']
     var se: opt.SendEmpty
     try
-      se = opt.SendEmpty.FromString(b:terminput_config.send_empty)
+      se = opt.SendEmpty.FromString(conf.send_empty)
     catch
       echoerr v:exception
       return
@@ -49,7 +59,7 @@ def SendToTerm(): void
       ->join("\n")
     terminput.Send(b:terminput_term_bufnr, content)
   endif
-  AfterSendAction()
+  AfterSendAction(conf)
 enddef
 
 nnoremap <buffer> <CR> <ScriptCmd>call SendToTerm()<CR>

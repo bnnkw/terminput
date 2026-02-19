@@ -1,6 +1,6 @@
 vim9script
 
-export def OpenTermInputBuffer(winid: number, conf: dict<any>): void
+export def OpenTermInputBuffer(winid: number): void
   if getwinvar(winid, '&buftype') != 'terminal'
     echoerr $'terminput: the window {winid} is not a terminal window.'
     return
@@ -14,7 +14,6 @@ export def OpenTermInputBuffer(winid: number, conf: dict<any>): void
     once: true,
   }])
   set filetype=terminput
-  b:terminput_config = conf
 enddef
 
 def ProcStat(pid: number): dict<any>
