@@ -3,7 +3,7 @@ set nocompatible
 execute $'set runtimepath+={getcwd()}'
 filetype plugin on
 
-let g:terminput_mappings = #{
+let g:terminput_config = #{
       \ bash: #{
       \   key: '<C-O>'
       \ },

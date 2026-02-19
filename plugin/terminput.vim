@@ -42,11 +42,11 @@ def DefaultConfig(): dict<any>
 enddef
 
 def UpdateConfig()
-  if !exists('g:terminput_mappings')
+  if !exists('g:terminput_config')
     config = {}
     return
   endif
-  config = opt.Parse(g:terminput_mappings, DefaultConfig())
+  config = opt.Parse(g:terminput_config, DefaultConfig())
   SetupTermInputMappings()
 enddef
 
