@@ -16,18 +16,35 @@ Plug 'bnnkw/terminput'
 ## Example Mapping
 
 ```vim
-let g:terminput_mappings = #{
-      \ bash: '<C-O>',
-      \ fish: '<C-O>',
-      \ zsh: '<C-O>',
-      \ jshell: '<C-O>',
-      \ node: '<C-O>',
-      \ python3: '<C-O>',
-      \ mysql: '<C-O>',
-      \ psql: '<C-O>',
-      \ sqlite3: '<C-O>',
-      \ aider: '<C-J>',
-      \ claude: '<C-J>',
-      \ gemini-cli: '<C-J>'
+let g:terminput_config = #{
+      \ bash: #{
+      \   key: '<C-O>',
+      \   after_send: 'wipeout'
+      \ },
+      \ fish: #{
+      \   key: '<C-O>',
+      \   after_send: 'wipeout'
+      \ },
+      \ zsh: #{
+      \   key: '<C-O>',
+      \   after_send: 'wipeout'
+      \ },
+      \ jshell: #{
+      \   key: '<C-O>'
+      \ },
+      \ python3: #{
+      \   key: '<C-O>'
+      \ },
+      \ sqlite3: #{
+      \   key: '<C-O>'
+      \ },
+      \ aider: #{
+      \   key: '<C-J>',
+      \   send_empty: 'crlf',
+      \ },
+      \ claude: #{
+      \   key: '<C-J>',
+      \   send_empty: 'crlf',
+      \ }
       \}
 ```

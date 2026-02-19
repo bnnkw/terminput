@@ -1,38 +1,31 @@
 vim9script
 
 import autoload 'terminput.vim'
+import autoload 'opt.vim'
 
-if !exists('g:terminput_after_send')
-  g:terminput_after_send = 'clear'
-endif
+command! OpenTermInput OpenTermInput(terminput.GetForeground(bufnr()))
+command! TermInputConfigUpdate UpdateConfig()
+command! TermInputConfigShow echo config
 
-if !exists('g:terminput_send_empty')
-  g:terminput_send_empty = 'crlf'
-endif
-
-command! OpenTermInput terminput.OpenTermInputBuffer(win_getid())
-
+var config = {}
 var key_bytes: dict<string> = {}
 
+def OpenTermInput(comm: string)
+  terminput.OpenTermInputBuffer(win_getid(), config[comm])
+enddef
+
 def TermInputAction(key: string)
-  var mappings: dict<string> = g:terminput_mappings
   var fg = terminput.GetForeground(bufnr())
-
-  if (has_key(mappings, fg) && key == get(mappings, fg))
-      || (has_key(mappings, '_') && key == get(mappings, '_'))
-    execute 'OpenTermInput'
-    return
+  if has_key(config, fg) && key == get(config[fg], 'key')
+    OpenTermInput(fg)
+  else
+    terminput.Send(bufnr(), key_bytes[key])
   endif
-
-  terminput.Send(bufnr(), key_bytes[key])
 enddef
 
 def SetupTermInputMappings()
-  if !exists('g:terminput_mappings')
-    return
-  endif
-
-  for mapped_key in values(g:terminput_mappings)
+  for comm in keys(config)
+    var mapped_key = config[comm]['key']
     key_bytes[mapped_key] = eval($'"\{mapped_key}"')
     # the first '<' to '<lt>'
     var escaped = keytrans(mapped_key)
@@ -40,4 +33,21 @@ def SetupTermInputMappings()
   endfor
 enddef
 
-SetupTermInputMappings()
+def DefaultConfig(): dict<any>
+  return {
+    key: '',
+    after_send: get(g:, 'terminput_after_send', 'clear'),
+    send_empty: get(g:, 'terminput_send_empty', 'crlf'),
+  }
+enddef
+
+def UpdateConfig()
+  if !exists('g:terminput_config')
+    config = {}
+    return
+  endif
+  config = opt.Parse(g:terminput_config, DefaultConfig())
+  SetupTermInputMappings()
+enddef
+
+UpdateConfig()
