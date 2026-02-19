@@ -4,7 +4,18 @@ execute $'set runtimepath+={getcwd()}'
 filetype plugin on
 
 let g:terminput_mappings = #{
-      \ bash: '<C-O>'
+      \ bash: #{
+      \   key: '<C-O>'
+      \ },
+      \ claude: #{
+      \   key: '<C-J>',
+      \   send_empty: 'crlf',
+      \ },
+      \ sqlite: #{
+      \   key: '<C-S>',
+      \   send_empty: 'lf',
+      \   after_send: 'wipeout'
+      \ }
       \}
 
 call term_start([
@@ -13,6 +24,7 @@ call term_start([
       \ '--norc'
       \ ], #{
       \   curwin: v:true,
+      \   term_finish: 'close',
       \   term_name: 'demo'
       \ }
       \)

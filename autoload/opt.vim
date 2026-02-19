@@ -23,3 +23,19 @@ export enum SendEmpty
     return matches[0]
   enddef
 endenum
+
+export def Parse(conf: dict<any>, default: dict<any>): dict<any>
+  var avail = ['key', 'send_empty', 'after_send']
+
+  var parsed: dict<any> = {}
+  for comm in keys(conf)
+    for k in keys(conf[comm])
+      if index(avail, k) == -1
+        throw $"terminput: the key '{k}' is not available in the config '{comm}'"
+      endif
+    endfor
+    parsed[comm] = extend(copy(conf[comm]), default, 'keep')
+  endfor
+
+  return parsed
+enddef
