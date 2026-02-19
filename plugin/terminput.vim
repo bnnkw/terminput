@@ -3,7 +3,7 @@ vim9script
 import autoload 'terminput.vim'
 import autoload 'opt.vim'
 
-command! OpenTermInput OpenTermInput(terminput.GetForeground(bufnr()))
+command! TermInputOpen OpenTermInput(terminput.GetForeground(bufnr()))
 command! TermInputConfigUpdate UpdateConfig()
 command! TermInputConfigShow echo config
 

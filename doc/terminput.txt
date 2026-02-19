@@ -10,8 +10,8 @@
 ==============================================================================
 1. Commands					*terminput-commands*
 
-						*:OpenTermInput*
-:OpenTermInput		Open a window where writing contents will be sent
+						*:TermInputOpen*
+:TermInputOpen		Open a window where writing contents will be sent
 			to the terminal.  Does nothing if the buffer
 			where the command was executed is not a |terminal|.
 
@@ -24,7 +24,7 @@ g:terminput_config	Define the per-command config. Each entry has a
 		Valid keys:
 
 		key		When the command is running in the
-				foreground, |:OpenTermInput| is executed.
+				foreground, |:TermInputOpen| is executed.
 
 				|terminput-actions|
 		after_send	Set the action after sending contents to
@@ -62,10 +62,10 @@ clear			Execute |deletebufline()|.
 
 b:terminput_term_bufnr	Point to the terminal that the buffer sends
 			contents to.  Automatically set by executing
-			|:OpenTermInput|.
+			|:TermInputOpen|.
 
 b:terminput_config	The resolved config for this buffer.
-			Automatically set by |:OpenTermInput|.
+			Automatically set by |:TermInputOpen|.
 
 ==============================================================================
 5. Mappings					*terminput-mappings*
